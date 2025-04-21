@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Audit Log for {{ username }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Audit Log: {{ username }}</h2>
+
+  {% if logs|length == 0 %}
+    <div class="alert alert-info text-center">No logs found for this user.</div>
+  {% else %}
+    <table class="table table-striped shadow-sm">
+      <thead>
+        <tr>
+          <th>Action</th>
+          <th>Details</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for log in logs %}
+        <tr>
+          <td>{{ log[0] }}</td>
+          <td>{{ log[1] or '—' }}</td>
+          <td>{{ log[2] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  <div class="text-center mt-4">
+    <a href="{{ url_for('admin.manage_users') }}" class="btn btn-secondary">Back to User Management</a>
+  </div>
+</div>
+{% endblock %}

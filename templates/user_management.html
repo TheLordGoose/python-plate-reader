@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Users{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Manage Users</h2>
+
+  {% if success %}
+    <div class="alert alert-success text-center">{{ success }}</div>
+  {% endif %}
+  {% if error %}
+    <div class="alert alert-danger text-center">{{ error }}</div>
+  {% endif %}
+
+  {% if users|length == 0 %}
+    <div class="alert alert-info text-center">No users found.</div>
+  {% else %}
+    <table class="table table-striped table-hover shadow-sm rounded">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user[0] }}</td>
+          <td>{{ user[1] }}</td>
+          <td>{{ user[2] }}</td>
+          <td>
+            {% if user[1] != session['user'] %}
+              <form method="POST" action="{{ url_for('admin.update_user_role') }}" class="d-inline">
+                <input type="hidden" name="username" value="{{ user[1] }}">
+                <button type="submit" name="action" value="toggle" class="btn btn-sm btn-outline-primary">
+                  {% if user[2] == 'admin' %}Demote{% else %}Promote{% endif %}
+                </button>
+              </form>
+
+              <form method="POST" action="{{ url_for('admin.delete_user') }}" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                <input type="hidden" name="username" value="{{ user[1] }}">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+
+              <form method="GET" action="{{ url_for('admin.view_audit_log') }}" class="d-inline">
+                <input type="hidden" name="username" value="{{ user[1] }}">
+                <button type="submit" class="btn btn-sm btn-outline-secondary">Audit Log</button>
+              </form>
+            {% else %}
+              <span class="text-muted">You're logged in</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>
+{% endblock %}

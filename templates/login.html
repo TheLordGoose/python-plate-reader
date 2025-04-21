@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card shadow-sm rounded-3">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">Login</h3>
+
+                {% if error %}
+                    <div class="alert alert-danger text-center">{{ error }}</div>
+                {% endif %}
+
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="username"
+                            name="username"
+                            required
+                            autofocus
+                        />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                name="password"
+                                required
+                            />
+                            <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                onclick="togglePassword()"
+                            >
+                                Show
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+
+                    <p class="text-center mt-3">
+                        Don't have an account?
+                        <a href="{{ url_for('auth.register') }}">Create one</a>
+                    </p>
+                </form>
+
+            </div>
+        </div>
+        <p class="text-center text-muted mt-3">Plate Reader v1.0</p>
+    </div>
+</div>
+
+<script>
+    function togglePassword() {
+        const pwd = document.getElementById("password");
+        const btn = event.target;
+        if (pwd.type === "password") {
+            pwd.type = "text";
+            btn.textContent = "Hide";
+        } else {
+            pwd.type = "password";
+            btn.textContent = "Show";
+        }
+    }
+</script>
+{% endblock %}

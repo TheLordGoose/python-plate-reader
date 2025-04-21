@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Settings{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Admin Settings</h2>
+
+  {% if success %}
+    <div class="alert alert-success text-center">{{ success }}</div>
+  {% endif %}
+  {% if error %}
+    <div class="alert alert-danger text-center">{{ error }}</div>
+  {% endif %}
+
+  <form method="POST">
+    <label for="otp_phone" class="form-label">Admin OTP Phone Number</label>
+    <div class="input-group mb-3" style="max-width: 500px;">
+        <input type="text" class="form-control" name="otp_phone" id="otp_phone" placeholder="+447123456789" required value="{{ phone or '' }}">
+        <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
