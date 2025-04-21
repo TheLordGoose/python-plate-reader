@@ -2,8 +2,6 @@
 
 A full-stack Flask web app for scanning and managing UK vehicle license plates using OCR and webcam integration. Built with Flask, OpenCV, Tesseract, and Twilio for OTP verification.
 
-![screenshot](static/assets/preview.png)
-
 ---
 
 ## 🚀 Features
